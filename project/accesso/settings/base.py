@@ -338,7 +338,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': normpath(join(RESOURCES_PATH, 'logs', 'accesso.log')),
+            'filename': normpath(join(RESOURCES_PATH, 'logs', '{{cookiecutter.repo_name}}.log')),
             'formatter': 'verbose'
         },
         'console': {
@@ -349,10 +349,15 @@ LOGGING = {
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins'],
+            'handlers': ['file', 'mail_admins'],
             'level': 'ERROR',
             'propagate': True,
         },
+        'accesso': {
+            'handlers': ['file', ],
+            'level': 'INFO',
+            'propagate': True,
+        }
     }
 }
 ########## END LOGGING CONFIGURATION

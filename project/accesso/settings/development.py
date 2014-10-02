@@ -53,3 +53,21 @@ DEBUG_TOOLBAR_PATCH_SETTINGS = False
 # http://django-debug-toolbar.readthedocs.org/en/latest/installation.html
 INTERNAL_IPS = ('127.0.0.1',)
 ########## END TOOLBAR CONFIGURATION
+
+
+########## LOGGING CONFIGURATION
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
+# See http://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize your logging configuration.
+
+LOGGING['loggers']['django.request'] = {
+    'handlers': ['console', ],
+    'level': 'DEBUG',
+    'propagate': True
+}
+LOGGING['loggers']['{{cookiecutter.package_name}}'] = {
+    'handlers': ['console', ],
+    'level': 'DEBUG',
+    'propagate': True
+}
+########## END LOGGING CONFIGURATION
