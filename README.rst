@@ -1,6 +1,8 @@
 Accesso
 =======
 
+Servizio di autenticazione.
+
 Vedi la cartella `project/` per il codice sorgente.
 
 Vedi la cartella `docs/` per la documentazione completa del progetto.
