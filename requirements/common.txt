@@ -25,4 +25,4 @@ django-allauth==0.18
 Pillow==2.5
 django-simple-menu==1.0.9
 django-bootstrap3==4.11.0
-iconfonts=0.0.3
+iconfonts=0.0.3django-ses==0.6.0

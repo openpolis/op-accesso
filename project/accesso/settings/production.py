@@ -16,7 +16,7 @@ TEMPLATE_DEBUG = False
 
 ########## HOST CONFIGURATION
 # See: https://docs.djangoproject.com/en/1.5/releases/1.5/#allowed-hosts-required-in-production
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', [])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 ########## END HOST CONFIGURATION
 
 
@@ -43,28 +43,22 @@ SECRET_KEY = env('SECRET_KEY')
 
 ########## EMAIL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django_ses.SESBackend'
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-host
-# EMAIL_HOST = env.str('EMAIL_HOST', 'smtp.gmail.com')
+# These are optional -- if they're set as environment variables they won't
+# need to be set here as well
+AWS_SES_ACCESS_KEY_ID = env.str('AWS_SES_ACCESS_KEY_ID')
+AWS_SES_SECRET_ACCESS_KEY = env.str('AWS_SES_SECRET_ACCESS_KEY')
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-host-password
-# EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', '')
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-host-user
-# EMAIL_HOST_USER = env.str('EMAIL_HOST_USER', ADMIN_EMAIL)
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-port
-# EMAIL_PORT = env.int('EMAIL_PORT', 587)
+# Additionally, you can specify an optional region, like so:
+AWS_SES_REGION_NAME = env.str('AWS_SES_REGION_NAME', 'eu-west-1')
+AWS_SES_REGION_ENDPOINT = env.str('AWS_SES_REGION_ENDPOINT', 'email.%s.amazonaws.com' % AWS_SES_REGION_NAME)
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-subject-prefix
-# EMAIL_SUBJECT_PREFIX = env.str('EMAIL_SUBJECT_PREFIX', '[%s] ' % PROJECT_NAME)
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-use-tls
-# EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', True)
+EMAIL_SUBJECT_PREFIX = env.str('EMAIL_SUBJECT_PREFIX', '[%s] ' % PROJECT_NAME)
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#server-email
-# SERVER_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = env.str('SERVER_EMAIL')
 ########## END EMAIL CONFIGURATION
 
 
