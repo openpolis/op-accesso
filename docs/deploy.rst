@@ -87,4 +87,37 @@ vi config/uwsgi.ini
     chdir = %(repo_path)/project
     home = %(venv_path)
 
+ln -s /home/op-accesso/config/uwsgi.ini /etc/uwsgi/vassals/op-accesso.ini
+
 * Aggiungere la configurazione per ngnix
+
+cp config/samples/nginx.conf config/nginx.conf
+vi config/nginx.conf
+
+    upstream accesso {
+        server unix:///home/op-accesso/accesso.sock;
+    }
+
+    server {
+            server_name accesso.depp.it;
+            charset utf-8;
+            client_max_body_size 75M;
+
+            access_log /var/log/nginx/op-accesso_access.log;
+            error_log /var/log/nginx/op-accesso_error.log;
+
+            location /favicon.ico {
+                alias /home/op-accesso/resources/static/images/favicon.ico;
+            }
+            location /static {
+                alias /home/op-accesso/resources/static;
+            }
+            location /media {
+                alias /home/op-accesso/resources/media;
+            }
+
+            location / {
+                uwsgi_pass accesso;
+                include /etc/nginx/uwsgi_params;
+            }
+    }
