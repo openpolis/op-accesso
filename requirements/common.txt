@@ -29,3 +29,6 @@ iconfonts==0.0.3
 
 # Email
 django-ses==0.6.0
+
+# User profile
+django-gravatar2==1.1.4
