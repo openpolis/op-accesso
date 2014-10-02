@@ -1,0 +1,121 @@
+{% load staticfiles i18n humanize bootstrap3 menu gravatar %}{% generate_menu %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{% block head_title %}Accesso{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block head_description %}Authentication provider for openpolis network{% endblock %}">
+    <meta name="author" content="{% block page_author %}joke2k{% endblock %}">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    {% block css %}
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/latest/css/font-awesome.css"/>
+
+    <!-- This file store project specific CSS -->
+    <link href="{% static 'css/project.css' %}" rel="stylesheet">
+    {% endblock css %}
+
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" />
+
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>{% block body %}
+
+{#<div class="header navbar navbar-default">#}
+{#    <div class="container">#}
+{#        <a class="navbar-brand" href="/">{{ project_title }}</a>#}
+{#        <ul class="nav navbar-nav">#}
+{#            {% if request.user.is_authenticated %}#}
+{#                <li><a href="{% url 'account_email' %}">{% trans "Emails" %}</a></li>#}
+{#                <li><a href="{% url 'socialaccount_connections' %}">{% trans "Connections" %}</a></li>#}
+{#                <li><a href="{% url 'account_change_password' %}">{% trans "Password" %}</a></li>#}
+{#            <li><a href="{% url 'account_logout' %}">{% trans "Logout" %}</a></li>#}
+{#            {% else %}#}
+{#            <li><a href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a></li>#}
+{#            <li><a href="{% url 'account_login' %}">{% trans "Log In" %}</a></li>#}
+{#            {% endif %}#}
+{#        </ul>#}
+{#    </div>#}
+{#</div>#}
+
+<div class="container">
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <h1 class="text-center" id="logo">{{ project_name }}</h1>
+    </div>
+</div>
+{% block container %}
+
+<div class="row">
+    {% if request.user.is_authenticated %}
+    <div class="col-md-3">
+
+        <div class="media">
+            <a class="pull-left" href="{% url 'account_profile' %}">
+                <img class="media-object img-circle" src="{% gravatar_url request.user.email 40 %}" alt="gravatar">
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading"><a href="{% url 'account_profile' %}">{{ request.user }}</a></h4>
+                <small class="muted"><i class="fa fa-sign-in" title="Ultimo accesso: {{ request.user.last_login|date:"r" }}"></i>
+                    {{ request.user.last_login|naturaltime }}</small>
+            </div>
+        </div>
+
+        <hr/>
+
+        <ul class="nav nav-pills nav-stacked">
+            {% for item in menus.user_menu %}
+            {% if item.separator %}<li><hr/></li>{% endif %}
+            <li class="{% if item.selected %} active{% endif %}">
+                <a href="{{ item.url }}">{% if item.icon %}<i class="fa fa-{{ item.icon }} icon-white"></i>&nbsp;{% endif %}{{ item.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    <div class="col-md-6{% if not request.user.is_authenticated %} col-md-offset-3{% endif %}">
+
+    {% bootstrap_messages %}
+
+    {% block content %}
+    <p>Use this document as a way to quick start any new project.</p>
+    {% endblock content %}
+    </div>
+</div>
+{% endblock container %}
+</div> <!-- /container -->
+
+{% block modal %}{% endblock modal %}
+
+<!-- Javascripts
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+{% block javascript %}
+<!-- Latest JQuery -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+<!-- place project specific Javascript in this file -->
+<script src="{% static 'js/project.js' %}"></script>
+{% endblock javascript %}
+{% endblock %}{# end block body #}
+{% block extra_body %}
+{% endblock %}
+</body>
+</html>

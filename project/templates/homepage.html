@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <article class="text-center">
+    <a href="{% url 'account_login' %}" title="Accedi {{ project_name }}"><i class="fa fa-sign-in fa-5x"></i></a>
+    </article>
+{% endblock %}

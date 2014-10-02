@@ -106,7 +106,7 @@ STATIC_URL = '/static/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
-    normpath(join(PACKAGE_PATH, 'static')),
+    normpath(join(PROJECT_PATH, 'static')),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -150,6 +150,13 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
+
+    # allauth specific context processors
+    "allauth.account.context_processors.account",
+    "allauth.socialaccount.context_processors.socialaccount",
+
+    # accesso context processors
+    'accesso.contexts.project_context',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
@@ -160,7 +167,7 @@ TEMPLATE_LOADERS = (
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
 TEMPLATE_DIRS = (
-    normpath(join(PACKAGE_PATH, 'templates')),
+    normpath(join(PROJECT_PATH, 'templates')),
 )
 ########## END TEMPLATE CONFIGURATION
 
@@ -175,6 +182,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 )
 ########## END MIDDLEWARE CONFIGURATION
 
@@ -196,7 +204,7 @@ DJANGO_APPS = (
     'django.contrib.staticfiles',
 
     # Useful template tags:
-    # 'django.contrib.humanize',
+    'django.contrib.humanize',
 
     # Admin panel and documentation:
     'django.contrib.admin',
@@ -204,10 +212,52 @@ DJANGO_APPS = (
 
     # Django helpers
     'django_extensions',
+
+    # Oauth2 Provider
+    'oauth2_provider',
+    'corsheaders',
+
+    # Templating
+    'bootstrap3',
+    'menu',
+    'django_gravatar',
+
+    # Allauth Apps
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # ... include the providers you want to enable:
+    # 'allauth.socialaccount.providers.amazon',
+    # 'allauth.socialaccount.providers.angellist',
+    # 'allauth.socialaccount.providers.bitbucket',
+    # 'allauth.socialaccount.providers.bitly',
+    # 'allauth.socialaccount.providers.dropbox',
+    # 'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.flickr',
+    # 'allauth.socialaccount.providers.feedly',
+    # 'allauth.socialaccount.providers.github',
+    # 'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.hubic',
+    # 'allauth.socialaccount.providers.instagram',
+    # 'allauth.socialaccount.providers.linkedin',
+    # 'allauth.socialaccount.providers.linkedin_oauth2',
+    # 'allauth.socialaccount.providers.openid',
+    # 'allauth.socialaccount.providers.persona',
+    # 'allauth.socialaccount.providers.soundcloud',
+    # 'allauth.socialaccount.providers.stackexchange',
+    # 'allauth.socialaccount.providers.tumblr',
+    # 'allauth.socialaccount.providers.twitch',
+    # 'allauth.socialaccount.providers.twitter',
+    # 'allauth.socialaccount.providers.vimeo',
+    # 'allauth.socialaccount.providers.vk',
+    # 'allauth.socialaccount.providers.weibo',
+    # 'allauth.socialaccount.providers.xing',
 )
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
+    'accesso',
+    'accesso.users',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -217,8 +267,13 @@ INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
 
 ########## AUTHENTICATION CONFIGURATION
 AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
     "django.contrib.auth.backends.ModelBackend",
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
+AUTH_USER_MODEL = 'users.User'
 ########## END AUTHENTICATION CONFIGURATION
 
 
@@ -282,3 +337,7 @@ WSGI_APPLICATION = '%s.wsgi.application' % PACKAGE_NAME
 # See: https://docs.djangoproject.com/en/dev/releases/1.6/#new-test-runner
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 ########## END TESTING CONFIGURATION
+
+########## CORS CONFIGURATION
+CORS_ORIGIN_ALLOW_ALL = True
+########## END CORS CONFIGURATION
