@@ -41,6 +41,13 @@ SECRET_KEY = env('SECRET_KEY')
 ########## END SECRET CONFIGURATION
 
 
+########## LOGGING CONFIGURATION
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
+# See http://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize your logging configuration.
+LOGGING['loggers']['']['level'] = env.str('PRODUCTION_LOG_LEVEL', 'INFO')
+########## END LOGGING CONFIGURATION
+
 ########## EMAIL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = 'django_ses.SESBackend'

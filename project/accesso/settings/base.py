@@ -327,6 +327,9 @@ LOGGING = {
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue'
         }
     },
     'handlers': {
@@ -338,9 +341,9 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class':'logging.handlers.RotatingFileHandler',
-            'filename': normpath(join(RESOURCES_PATH, 'logs', 'accesso.log')),
-            'maxBytes': 1 * 1024 * 1024,
-            'backupCount': 2,
+            'filename': normpath(join(RESOURCES_PATH, 'logs', 'op-accesso.log')),
+            'maxBytes': 1024*1024*5, # 5 MB
+            'backupCount': 7,
             'formatter': 'verbose',
         },
         'console': {
@@ -348,6 +351,9 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'verbose',
         },
+        'null': {
+            "class": 'django.utils.log.NullHandler',
+        }
     },
     'loggers': {
         'django.request': {
@@ -355,11 +361,13 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-        'accesso': {
-            'handlers': ['file', ],
+        'django': {
+            'handlers': ['null', ],
+        },
+        '': {
+            'handlers': ['console', 'file', ],
             'level': 'INFO',
-            'propagate': True,
-        }
+        },
     }
 }
 ########## END LOGGING CONFIGURATION

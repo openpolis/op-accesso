@@ -65,7 +65,7 @@ LOGGING['loggers']['django.request'] = {
     'level': 'DEBUG',
     'propagate': True
 }
-LOGGING['loggers']['accesso'] = {
+LOGGING['loggers'][''] = {
     'handlers': ['console', ],
     'level': 'DEBUG',
     'propagate': True
