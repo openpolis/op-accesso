@@ -1,4 +1,9 @@
 Install
-=========
+=======
 
-This is where you write how to get a new laptop to run this project.
+Per installare op-accesso su un computer locale:
+
+* Clonare il repository
+* syncdb
+* collectstatic
+* compilemessages
