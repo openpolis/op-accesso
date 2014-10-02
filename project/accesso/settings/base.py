@@ -341,7 +341,7 @@ LOGGING = {
             'filename': normpath(join(RESOURCES_PATH, 'logs', 'accesso.log')),
             'maxBytes': 1 * 1024 * 1024,
             'backupCount': 2,
-            'formatter': 'standard',
+            'formatter': 'verbose',
         },
         'console': {
             'level': 'DEBUG',
