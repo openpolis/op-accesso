@@ -32,7 +32,7 @@ LOGGING['loggers']['django.request'] = {
     'level': 'DEBUG',
     'propagate': True
 }
-LOGGING['loggers']['{{cookiecutter.package_name}}'] = {
+LOGGING['loggers']['accesso'] = {
     'handlers': ['console', ],
     'level': 'DEBUG',
     'propagate': True
