@@ -66,6 +66,14 @@ DATABASES = {
 }
 ########## END DATABASE CONFIGURATION
 
+########## EMAIL CONFIGURATION
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-subject-prefix
+EMAIL_SUBJECT_PREFIX = env.str('EMAIL_SUBJECT_PREFIX', '[%s] ' % PROJECT_NAME)
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#server-email
+SERVER_EMAIL = env.str('SERVER_EMAIL', 'root@%s.com' % PACKAGE_PATH)
+########## END EMAIL CONFIGURATION
+
 
 ########## GENERAL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#time-zone
