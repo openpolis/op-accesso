@@ -337,9 +337,11 @@ LOGGING = {
         },
         'file': {
             'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': normpath(join(RESOURCES_PATH, 'logs', '{{cookiecutter.repo_name}}.log')),
-            'formatter': 'verbose'
+            'class':'logging.handlers.RotatingFileHandler',
+            'filename': normpath(join(RESOURCES_PATH, 'logs', 'accesso.log')),
+            'maxBytes': 1 * 1024 * 1024,
+            'backupCount': 2,
+            'formatter': 'standard',
         },
         'console': {
             'level': 'DEBUG',
