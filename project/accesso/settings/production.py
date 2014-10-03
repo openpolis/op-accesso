@@ -45,6 +45,7 @@ SECRET_KEY = env('SECRET_KEY')
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
+LOGGING['loggers']['django.request']['handlers'] = ['mail_admins', 'file']
 LOGGING['loggers']['']['level'] = env.str('PRODUCTION_LOG_LEVEL', 'INFO')
 ########## END LOGGING CONFIGURATION
 
