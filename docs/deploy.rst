@@ -7,6 +7,7 @@ Per eseguire il deploy in produzione bisogna eseguire i seguenti passi:
 
 cd /home
 git clone git@github.com:openpolis/op-accesso.git
+sudo chown -R www-data op-accesso/
 cd op-accesso/
 
 * Installare i packages necessari
@@ -54,6 +55,12 @@ vi config/.env
     AWS_SES_REGION_NAME=ue-west-1
     AWS_SES_REGION_ENDPOINT=email.ue-west-1.amazonaws.com
 
+* Installare l'applicazione
+
+python project/manage.py syncdb
+python project/manage.py collectstatic --noinput
+python project/manage.py compilemessages
+
 * Aggiungere il processo uwsgi
 
 cp config/samples/uwsgi.ini config/uwsgi.ini
@@ -86,6 +93,7 @@ vi config/uwsgi.ini
     # change to django project directory
     chdir = %(repo_path)/project
     home = %(venv_path)
+    module = %(package_name).wsgi
 
 ln -s /home/op-accesso/config/uwsgi.ini /etc/uwsgi/vassals/op-accesso.ini
 
@@ -94,11 +102,12 @@ ln -s /home/op-accesso/config/uwsgi.ini /etc/uwsgi/vassals/op-accesso.ini
 cp config/samples/nginx.conf config/nginx.conf
 vi config/nginx.conf
 
-    upstream accesso {
-        server unix:///home/op-accesso/accesso.sock;
+    upstream op-accesso {
+        server unix:///home/op-accesso/op-accesso.sock;
     }
 
     server {
+            listen 8010;
             server_name accesso.depp.it;
             charset utf-8;
             client_max_body_size 75M;
@@ -106,9 +115,16 @@ vi config/nginx.conf
             access_log /var/log/nginx/op-accesso_access.log;
             error_log /var/log/nginx/op-accesso_error.log;
 
-            location /favicon.ico {
-                alias /home/op-accesso/resources/static/images/favicon.ico;
+            # alias favicon.* to static
+            location ~ ^/favicon.(\w+)$ {
+                alias /home/op-accesso/resources/static/favicon.$1;
             }
+
+            # alias robots.txt and humans.txt to static
+            location ~ ^/(robots|humans).txt$ {
+                alias /home/op-accesso/resources/static/$1.txt;
+            }
+
             location /static {
                 alias /home/op-accesso/resources/static;
             }
@@ -117,7 +133,15 @@ vi config/nginx.conf
             }
 
             location / {
-                uwsgi_pass accesso;
+                uwsgi_pass op-accesso;
                 include /etc/nginx/uwsgi_params;
             }
     }
+
+sudo service nginx restart
+
+* Configurazione servizio
+
+/admin > login
+modifica site
+aggiungi social applications
