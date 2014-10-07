@@ -1,0 +1,34 @@
+# This is an implicit value, here for clarity
+--index-url https://pypi.python.org/simple/
+
+# Bleeding edge Django
+Django>=1.7,<1.8
+django-extensions==1.4
+
+# Configuration
+django-environ==0.3
+
+# Forms
+django-braces==1.4
+
+# Models
+django-model-utils==2.2
+
+# Oauth2 Provider
+django-cors-headers==0.13
+django-oauth-toolkit==0.7.2
+
+# Authentication
+django-allauth==0.18
+
+# Templating
+Pillow==2.5
+django-simple-menu==1.0.9
+django-bootstrap3==4.11.0
+iconfonts==0.0.3
+
+# Email
+django-ses==0.6.0
+
+# User profile
+django-gravatar2==1.1.4
