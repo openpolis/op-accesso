@@ -314,7 +314,7 @@ SOCIALACCOUNT_PROVIDERS = {
 # more details on how to customize your logging configuration.
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
     'formatters': {
         'verbose': {
             'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
@@ -357,15 +357,16 @@ LOGGING = {
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
+            'handlers': ['file', 'mail_admins'],
+            'level': 'WARNING',
             'propagate': True,
         },
         'django': {
             'handlers': ['null', ],
+            'level': 'WARNING',
         },
         '': {
-            'handlers': ['console', 'file', ],
+            'handlers': ['null', ],
             'level': 'INFO',
         },
     }

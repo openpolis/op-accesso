@@ -26,6 +26,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
-LOGGING['loggers']['']['level'] = 'DEBUG'
-LOGGING['loggers']['django.request']['handlers'] = ['null', ]
+LOGGING['loggers'] = {
+    '': {
+        'handlers': ['file', 'console'],
+        'level': 'DEBUG'
+    }
+}
 ########## END LOGGING CONFIGURATION

@@ -59,15 +59,10 @@ INTERNAL_IPS = ('127.0.0.1',)
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
-
-LOGGING['loggers']['django.request'] = {
-    'handlers': ['console', ],
-    'level': 'DEBUG',
-    'propagate': True
-}
-LOGGING['loggers'][''] = {
-    'handlers': ['console', 'file'],
-    'level': 'DEBUG',
-    'propagate': True
+LOGGING['loggers'] = {
+    '': {
+        'handlers': ['console', 'file'],
+        'level': 'DEBUG'
+    }
 }
 ########## END LOGGING CONFIGURATION
