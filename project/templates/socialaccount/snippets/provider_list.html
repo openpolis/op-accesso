@@ -1,19 +1,18 @@
 {% load socialaccount %}
 
-{% for provider in socialaccount.providers %}
+{% if user.is_authenticated %}
+{% get_social_accounts user as accounts %}
+{% endif %}
+
+{% for provider in socialaccount.providers %}{% if not  user.is_authenticated or provider.id not in accounts %}
 {% if provider.id == "openid" %}
 {% for brand in provider.get_brands %}
-<li>
-  <a title="{{brand.name}}" 
-     class="socialaccount_provider {{provider.id}} {{brand.id}}" 
+  <a title="{{brand.name}}"
+     class="btn btn-social btn-{{ provider.id|cut:"_oauth2" }} btn-{{ brand.id|cut:"_oauth2" }}"
      href="{% provider_login_url provider.id openid=brand.openid_url process=process %}"
-     >{{brand.name}}</a>
-</li>
+     ><i class="fa fa-{{ brand.id|cut:"_oauth2" }}"></i> {{ brand.name }}</a>
 {% endfor %}
 {% endif %}
-<li>
-  <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}" 
-     href="{% provider_login_url provider.id process=process %}">{{provider.name}}</a>
-</li>
-{% endfor %}
-
+  <a title="{{provider.name}}" class="btn btn-social btn-{{ provider.id|cut:"_oauth2" }}"
+     href="{% provider_login_url provider.id process=process %}"><i class="fa fa-{{ provider.id|cut:"_oauth2" }}"></i> {{provider.name}}</a>
+{% endif %}{% endfor %}

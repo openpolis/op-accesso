@@ -31,7 +31,7 @@ DATABASES = {
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
-LOGGING['loggers']['django.request']['handlers'] = ['mail_admins']
+# See base.LOGGING
 ########## END LOGGING CONFIGURATION
 
 
@@ -40,6 +40,18 @@ LOGGING['loggers']['django.request']['handlers'] = ['mail_admins']
 SECRET_KEY = env('SECRET_KEY')
 ########## END SECRET CONFIGURATION
 
+
+########## LOGGING CONFIGURATION
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
+# See http://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize your logging configuration.
+LOGGING['loggers'] = {
+    '': {
+        'handlers': ['file', ],
+        'level': 'DEBUG' if DEBUG else 'INFO'
+    }
+}
+########## END LOGGING CONFIGURATION
 
 ########## EMAIL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
@@ -53,12 +65,6 @@ AWS_SES_SECRET_ACCESS_KEY = env.str('AWS_SES_SECRET_ACCESS_KEY')
 # Additionally, you can specify an optional region, like so:
 AWS_SES_REGION_NAME = env.str('AWS_SES_REGION_NAME', 'eu-west-1')
 AWS_SES_REGION_ENDPOINT = env.str('AWS_SES_REGION_ENDPOINT', 'email.%s.amazonaws.com' % AWS_SES_REGION_NAME)
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-subject-prefix
-EMAIL_SUBJECT_PREFIX = env.str('EMAIL_SUBJECT_PREFIX', '[%s] ' % PROJECT_NAME)
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#server-email
-SERVER_EMAIL = env.str('SERVER_EMAIL')
 ########## END EMAIL CONFIGURATION
 
 

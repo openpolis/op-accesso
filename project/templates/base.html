@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/latest/css/font-awesome.css"/>
 
     <!-- This file store project specific CSS -->
+    <link href="{% static 'css/bootstrap-social.css' %}" rel="stylesheet">
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
     {% endblock css %}
 
@@ -55,7 +56,7 @@
 <div class="container">
 <div class="row">
     <div class="col-md-12 col-sm-12">
-        <h1 class="text-center" id="logo">{{ project_name }}</h1>
+            <h1 class="text-center" id="logo">{{ site.name }}</h1>
     </div>
 </div>
 {% block container %}

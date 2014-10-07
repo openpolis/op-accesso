@@ -13,7 +13,7 @@ for item in (
         MenuItem(_("Account Connections"),
                  reverse("socialaccount_connections"),
                  weight=10,
-                 icon="group"),
+                 icon="globe"),
         MenuItem(_("Change Password"),
                  reverse("account_change_password"),
                  weight=10,

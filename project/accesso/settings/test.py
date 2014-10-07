@@ -20,3 +20,16 @@ EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 #     'default': env.cache_url_config('locmem://'),
 # }
 ########## END CACHE CONFIGURATION
+
+
+########## LOGGING CONFIGURATION
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
+# See http://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize your logging configuration.
+LOGGING['loggers'] = {
+    '': {
+        'handlers': ['file', 'console'],
+        'level': 'DEBUG'
+    }
+}
+########## END LOGGING CONFIGURATION

@@ -66,6 +66,14 @@ DATABASES = {
 }
 ########## END DATABASE CONFIGURATION
 
+########## EMAIL CONFIGURATION
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#email-subject-prefix
+EMAIL_SUBJECT_PREFIX = env.str('EMAIL_SUBJECT_PREFIX', '[%s] ' % PROJECT_NAME)
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#server-email
+SERVER_EMAIL = env.str('SERVER_EMAIL', 'root@%s.com' % PACKAGE_PATH)
+########## END EMAIL CONFIGURATION
+
 
 ########## GENERAL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#time-zone
@@ -306,7 +314,7 @@ SOCIALACCOUNT_PROVIDERS = {
 # more details on how to customize your logging configuration.
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
     'formatters': {
         'verbose': {
             'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
@@ -319,6 +327,9 @@ LOGGING = {
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue'
         }
     },
     'handlers': {
@@ -329,21 +340,34 @@ LOGGING = {
         },
         'file': {
             'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': normpath(join(RESOURCES_PATH, 'logs', 'accesso.log')),
-            'formatter': 'verbose'
+            'class':'logging.handlers.RotatingFileHandler',
+            'filename': normpath(join(RESOURCES_PATH, 'logs', 'op-accesso.log')),
+            'maxBytes': 1024*1024*5, # 5 MB
+            'backupCount': 7,
+            'formatter': 'verbose',
         },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose',
         },
+        'null': {
+            "class": 'django.utils.log.NullHandler',
+        }
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
+            'handlers': ['file', 'mail_admins'],
+            'level': 'WARNING',
             'propagate': True,
+        },
+        'django': {
+            'handlers': ['null', ],
+            'level': 'WARNING',
+        },
+        '': {
+            'handlers': ['null', ],
+            'level': 'INFO',
         },
     }
 }

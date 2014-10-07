@@ -1,6 +1,8 @@
 Accesso
 =======
 
+Servizio di autenticazione unificato ai servizi depp.
+
 Vedi la cartella `project/` per il codice sorgente.
 
 Vedi la cartella `docs/` per la documentazione completa del progetto.
