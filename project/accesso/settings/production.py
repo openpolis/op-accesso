@@ -7,10 +7,10 @@ from .base import *
 
 ########## DEBUG CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = False
+DEBUG = env.bool('DEBUG', False)
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = DEBUG
 ########## END DEBUG CONFIGURATION
 
 
@@ -45,12 +45,13 @@ SECRET_KEY = env('SECRET_KEY')
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
-LOGGING['loggers'] = {
-    '': {
-        'handlers': ['file', ],
-        'level': 'DEBUG' if DEBUG else 'INFO'
+if not DEBUG:
+    LOGGING['loggers'] = {
+        '': {
+            'handlers': ['file', ],
+            'level': 'INFO'
+        }
     }
-}
 ########## END LOGGING CONFIGURATION
 
 ########## EMAIL CONFIGURATION

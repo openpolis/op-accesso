@@ -305,6 +305,11 @@ SOCIALACCOUNT_PROVIDERS = {
         'VERIFIED_EMAIL': False
     }
 }
+
+OAUTH2_PROVIDER = {
+    # this is the list of available scopes
+    'SCOPES': {'read': 'Read scope', }
+}
 ########## END AUTHENTICATION CONFIGURATION
 
 
