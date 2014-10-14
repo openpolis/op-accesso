@@ -308,7 +308,11 @@ SOCIALACCOUNT_PROVIDERS = {
 
 OAUTH2_PROVIDER = {
     # this is the list of available scopes
-    'SCOPES': {'read': 'Read scope', }
+    'SCOPES': {'read': 'Read scope', },
+
+    # TODO: fix secret key length (128) for integration with django-allauth (100)
+    #       will be fixed with 0.8 of django-oauth-toolkit
+    'CLIENT_SECRET_GENERATOR_CLASS': 'accesso.generators.ClientSecretGenerator'
 }
 ########## END AUTHENTICATION CONFIGURATION
 
